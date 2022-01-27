@@ -44,7 +44,7 @@ jobs:
   # Azure login
   - uses: azure/login@v1
     with:
-     creds: ${{ secrets.AZURE_CREDENTIALS_GITHUB_SECRET }}
+     creds: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
   - uses: azure/appservice-settings@v1
     with:
      app-name: ${{ env.AZURE_WEBAPP_NAME }}
