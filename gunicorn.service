@@ -1,0 +1,22 @@
+[Unit]
+Description = Gunicorn Flask
+After = network.target
+
+[Service]
+PermissionsStartOnly = true
+PIDFile = /run/gunicorn/gunicorn.pid
+User = Greenhealth
+Group = Greenhealth
+WorkingDirectory = /home/Greenhealth/apivoorvm
+ExecStartPre = /bin/mkdir /run/gunicorn
+ExecStartPre = /bin/chown -R Greenhealth:Greenhealth /run/gunicorn
+ExecStart = /usr/bin/env gunicorn app:app -b 0.0.0.0:8080 --pid /run/gunicorn/gunicorn.pid
+ExecReload = /bin/kill -s HUP $MAINPID
+ExecStop = /bin/kill -s TERM $MAINPID
+ExecStopPost = /bin/rm -rf /run/gunicorn
+PrivateTmp = true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy = multi-user.target
